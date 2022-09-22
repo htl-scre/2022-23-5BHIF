@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Classes</title>
+</head>
+<body>
+<ul>
+    <li th:each="class : ${classes}">
+        <a th:text="${class.name}"
+           th:href="@{students/{class} (class=${class.name})}"></a>
+    </li>
+</ul>
+</body>
+</html>

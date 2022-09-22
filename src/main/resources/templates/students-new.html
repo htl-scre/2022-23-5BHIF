@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Student</title>
+</head>
+<body>
+<h1>eine h1</h1>
+<form action="/students/new"
+      method="post"
+      th:object="${new-student}">
+
+
+    <div th:if="${#fields.hasErrors('*')}">
+        <h1>Errors</h1>
+        <ul>
+            <li th:each="err : ${#fields.errors('*')}"
+                th:text="${err}">Error</li>
+        </ul>
+    </div>
+
+    <div>
+        <label th:for="*{name}">Name:</label>
+        <input type="text" th:field="*{name}">
+        <span th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}"/>
+    </div>
+
+    <div>
+        <label th:for="*{number}">number:</label>
+        <input type="text" th:field="*{number}">
+        <span th:if="${#fields.hasErrors('number')}"
+              th:errors="*{number}"/>
+    </div>
+
+    <select th:field="*{schoolClass}">
+        <option th:each="schoolClass : ${classes}"
+                th:text="${schoolClass.name}"
+                th:value="${schoolClass.name}"/>
+    </select>
+    <input type="submit">
+</form>
+</body>
+</html>
