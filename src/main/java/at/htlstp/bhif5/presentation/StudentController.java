@@ -28,8 +28,8 @@ public record StudentController(StudentRepository studentRepository, ClassReposi
     }
 
     @GetMapping("new")
-    public String getStudentEnrollmentForm(Model model, Student student) {
-        if (student == null)
+    public String getStudentEnrollmentForm(Model model) {
+        if (!model.containsAttribute("new-student"))
             model.addAttribute("new-student", new Student());
         model.addAttribute("classes", classRepository.findAll());
         return "students-new";
@@ -38,7 +38,7 @@ public record StudentController(StudentRepository studentRepository, ClassReposi
     @PostMapping("new")
     public String handleStudentEnrollment(Model model, @Valid @ModelAttribute("new-student") Student student, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return getStudentEnrollmentForm(model, student);
+            return getStudentEnrollmentForm(model);
         studentRepository.save(student);
         return "redirect:/students";    //kein .html file, sondern eine route
     }
